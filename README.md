@@ -5,6 +5,8 @@ A module for FeedHenry RainCatcher that manages users, groups and memberships. I
 - Frontend directives and services providing CRUD clients for user, group and membership.
 
 
+
+
 ## Client-side usage
 
 ### Client-side usage (via broswerify)
