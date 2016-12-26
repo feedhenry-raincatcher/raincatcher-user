@@ -1,0 +1,7 @@
+{
+  "apiHost": "http://localhost:8080",
+  "apiPath": "/api/wfm/user",
+  "authpolicyPath": "/box/srv/1.1/admin/authpolicy",
+  "policyId": "wfm",
+  "authResponseExclusionList": ["password"]
+}

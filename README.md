@@ -100,8 +100,10 @@ var authServiceGuid = process.env.WFM_AUTH_GUID;
 ...
 
 // setup the wfm user router
-require('fh-wfm-user/lib/router/mbaas')(mediator, app);
+require('fh-wfm-user/lib/router/mbaas')(mediator, app, authResponseExclusionList);
 ```
+
+Note: Setting the `authResponseExclusionList` array as `['password', 'banner']` will prevent these fields from appearing in the authentication response. By default, the `password` field is removed from the response. To allow all fields to be sent, set `authResponseExclusionList` as an empty array.
 
 For a more complete example check [here](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)
 
@@ -124,11 +126,11 @@ Base url : `/api/wfm/[group|user|membership|`
 
 Base url : `/api/wfm/user`
 
-| resource | parameters | method | returns |
+| resource | parameters | method | returns | description |
 | -------- | ------ | ------- | ---- |
-| /auth | all | username, password | `{satus: 'ok', userId: userId, sessionToken: sessiontoken, authResponse: profileData}` |
-| /verifysession | all | | `{isValid: true}` |
-| /revokesession | all | |  `{}` |
+| /auth | all | `{status: 'ok', userId: username, sessionToken: sessiontoken, authResponse: authResponse}` | `sessionToken` : identifier for a specific user for the duration of that user's visit. <br>  `authResponse` : authentication response containing the authenticated users details. |
+| /verifysession | all | `{isValid: true}` | |
+| /revokesession | all | `{}` |  | |
 
 
 
