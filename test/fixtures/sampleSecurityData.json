@@ -1,0 +1,8 @@
+{
+  "sessionToken": "secret_token",
+  "plaintext": "plaintext",
+  "plaintextSha256": "ltYuKr0+Qt5fUDMPuO/ExVmYNSeAd7IemqCzPB3wehw=",
+  "aesKey":"secret",
+  "ciphertextLength": 556,
+  "sampleUserProfileDataCiphertext": "U2FsdGVkX19wiZrKkC+r+4BvhuhJq0LuNd0lLOBtFOShIgtmy0SFrZQBYNeDkuMvYUna1NalSzXbqxAYmWUPMPELXWf71MzLvBlFrLnviCya759l7bfPUAqaW0lUexLQOJLU6x3CvVGWPzHlZkYkTBmmx0Du6tIaFdKYs6kBeMNXjCmcSvpyzmTxxSqB1DtoVk08/gz/cWdse+AuXCp8YnRZFkvPa4v3dF+oqX3RvHI/CJgbqZ6sP1mzRmkYF7wbuUhJjhaaksrrd46Gh6pYai+AqN8c0gaAzb3flfL1Sw0KWQDDMaK0VQwRZhCD6SyRXa6ChBKMdw9LMo8iSFXYXl7vtNE6cmU5Ol4Uy6EXdBud32U7jDgTo6v+meG8x1rdIHqrND8tXa5Sjl8xaZt310vJBIKm08usiSdKcgcJOSYaDqQtZLG2klwWdMEFfKcdBn4FN4kS5MYPBrPjt0qHedvVyCa1Pvm95tGUN5U/kvU2gJBqbEPnn9UJJ49D568O9tNVRpbRNB3xCzPRcDtQcOTlRzuHoM0sumCCqjh5j6k="
+}
