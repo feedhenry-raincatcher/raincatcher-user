@@ -5,13 +5,13 @@ A module for FeedHenry RainCatcher that manages users, groups and memberships. I
 - Frontend directives and services providing CRUD clients for user, group and membership.
 
 ## Upgrading to 0.2.0 from 0.1.x
-Version 0.2.0 introduces session storage for authenticated users utilizing either mongodb or redis as backends.
+Version 0.2.0 introduces session storage for authenticated users utilizing either MongoDB or Redis as storage engines.
 
 This involves an extra parameter to the initialization of the router for the authentication service which contains the configuration for the session storage.
 
 ### How to upgrade
 
-In the auth-service:
+In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialise the session store with the configuration shown below.
 
 ```javascript
 const userRouter = require('fh-wfm-user/lib/router/mbaas');
