@@ -13,7 +13,7 @@ This involves an extra parameter to the initialization of the router for the aut
 
 In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialize the MBaaS router with the new parameter for supplying the configuration for the session storage.
 
-See the [Setup router for Cloud app](#setup-router-for-cloud-app) section for more details.
+See the [Setup router for Cloud App](#setup-router-for-cloud-app) section for more details.
 
 ## Upgrading to 0.1.0 from 0.0.x
 Version 0.1.0 introduces secure authentication along with password hashing. Password update for users is available as part of the updated [raincatcher-demo-portal](https://github.com/feedhenry-raincatcher/raincatcher-demo-portal) (available in Workers > Worker details > Edit)
@@ -76,7 +76,7 @@ For a more complete example around user authentication operations, please check 
 
 ## Usage in an express backend and mbaas service
 
-### Setup router for Cloud app
+### Setup router for Cloud App
 The server-side component of this RainCatcher module exports a function that takes an [Express](http://expressjs.com/) application and [mediator](https://github.com/feedhenry-raincatcher/raincatcher-mediator) instances as parameters, as follows:
 
 ```javascript
@@ -94,6 +94,23 @@ var authServiceGuid = process.env.WFM_AUTH_GUID;
 // setup the wfm user router
 require('fh-wfm-user/lib/router/cloud')(mediator, app, authServiceGuid);
 
+```
+
+#### Securing endpoints with the `validateSession` middleware
+
+Version 0.2.0 of this module adds session storage and management, with the capability of requiring users to be authenticated in order to access certain endpoints of your Cloud App
+
+In order to enforce authentication on specific endpoints for your Cloud App, add the [`validateSesssion` middleware](./lib/middleware/validateSession.js) to the middleware chain before the handlers for the endpoints you wish to secure:
+
+```javascript
+var fhMbaasApi = require('fh-mbaas-api');
+var validateSession = require('fh-wfm-user/lib/middleware/validateSession');
+
+// in this example, require users to be authenticated for fh-wfm-sync calls
+app.use('mbaas/sync', validateSession(mediator, mbaasApi,
+  // The last parameter is an array of sub-paths to exclude from session validation
+  ['/authpolicy']
+));
 ```
 
 ### Setup MBaaS authentication service
@@ -150,7 +167,7 @@ Note: Setting the `authResponseExclusionList` array as `['password', 'banner']` 
 For a more complete example check [the example initialization on raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth/blob/0e9d5edb200fdf84e39ce4dac08c48fadefded8a/application.js#L61).
 
 ### Environment variables
-The `WFM_AUTH_POLICY_ID` env var can be set in the WFM cloud APP to override the default `wfm` auth policy ID.
+The `WFM_AUTH_POLICY_ID` env var can be set in the WFM Cloud App to override the default `wfm` auth policy ID.
 
 ### Exposed CRUD endpoints
 
