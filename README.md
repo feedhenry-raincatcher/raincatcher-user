@@ -11,42 +11,9 @@ This involves an extra parameter to the initialization of the router for the aut
 
 ### How to upgrade
 
-In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialise the session store with the configuration shown below.
+In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialize the MBaaS router with the new parameter for supplying the configuration for the session storage.
 
-```javascript
-const userRouter = require('fh-wfm-user/lib/router/mbaas');
-
-userRouter.init(
-  mediator, // fh-wfm-mediator instance
-  expressApp, // express application upon which to mount the router
-  ['password'], // list of fields from Users to exclude from the HTTP responses
-
-  // Session storage configuration, new in 0.2.0
-  {
-    store: 'mongo', // The store to utilize for session storage,
-                    // current available values are ['mongo', 'redis']
-    config: {
-      // the following parameters are forwarded to express-session
-      secret: 'raincatcher',
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        secure: true,
-        httpOnly: true,
-        path: '/'
-      }
-      // `url` is used by the 'mongo' store for configuration
-      url: 'mongodb://localhost:27017/raincatcher-demo-auth-session-store'
-      // 'host' and 'port' are used by the 'redis' store
-      host: '127.0.0.1',
-      port: '6379'
-    }
-  },
-
-  function callback(err) {
-    // router initialized
-  })
-```
+See the [Setup router for Cloud app](#setup-router-for-cloud-app) section for more details.
 
 ## Upgrading to 0.1.0 from 0.0.x
 Version 0.1.0 introduces secure authentication along with password hashing. Password update for users is available as part of the updated [raincatcher-demo-portal](https://github.com/feedhenry-raincatcher/raincatcher-demo-portal) (available in Workers > Worker details > Edit)
@@ -109,8 +76,8 @@ For a more complete example around user authentication operations, please check 
 
 ## Usage in an express backend and mbaas service
 
-### Setup express backend end
-The server-side component of this RainCatcher module exports a function that takes express and mediator instances as parameters, as in:
+### Setup router for Cloud app
+The server-side component of this RainCatcher module exports a function that takes an [Express](http://expressjs.com/) application and [mediator](https://github.com/feedhenry-raincatcher/raincatcher-mediator) instances as parameters, as follows:
 
 ```javascript
 var express = require('express')
@@ -118,7 +85,7 @@ var express = require('express')
   , mbaasExpress = mbaasApi.mbaasExpress()
   , mediator = require('fh-wfm-mediator/lib/mediator')
   ;
-// Set authServiveGuid
+// Set authServiceGuid
 var authServiceGuid = process.env.WFM_AUTH_GUID;
 
 // configure the express app
@@ -129,7 +96,7 @@ require('fh-wfm-user/lib/router/cloud')(mediator, app, authServiceGuid);
 
 ```
 
-### Setup mbaas service
+### Setup MBaaS authentication service
 
 ```javascript
 var express = require('express')
@@ -144,12 +111,43 @@ var authServiceGuid = process.env.WFM_AUTH_GUID;
 ...
 
 // setup the wfm user router
-require('fh-wfm-user/lib/router/mbaas')(mediator, app, authResponseExclusionList);
+const userRouter = require('fh-wfm-user/lib/router/mbaas');
+
+userRouter.init(
+  mediator, // fh-wfm-mediator instance
+  expressApp, // express application upon which to mount the router
+  ['password'], // list of fields from Users to exclude from the HTTP responses
+
+  // Session storage configuration, new in 0.2.0
+  {
+    store: 'mongo', // The store to utilize for session storage,
+                    // current available values are ['mongo', 'redis']
+    config: {
+      // the following parameters are forwarded to express-session
+      secret: 'raincatcher',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        secure: true,
+        httpOnly: true,
+        path: '/'
+      }
+      // `url` is used by the 'mongo' store for configuration
+      url: 'mongodb://localhost:27017/raincatcher-demo-auth-session-store'
+      // 'host' and 'port' are used by the 'redis' store
+      host: '127.0.0.1',
+      port: '6379'
+    }
+  },
+
+  function callback(err) {
+    // router initialized
+  });
 ```
 
-Note: Setting the `authResponseExclusionList` array as `['password', 'banner']` will prevent these fields from appearing in the authentication response. By default, the `password` field is removed from the response. To allow all fields to be sent, set `authResponseExclusionList` as an empty array.
+Note: Setting the `authResponseExclusionList` array as `['password', 'banner']` will prevent these fields from appearing in the authentication response. By default, the `password` field is removed from the response. To allow all fields to be sent, set `authResponseExclusionList` to an empty array.
 
-For a more complete example check [here](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)
+For a more complete example check [the example initialization on raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth/blob/0e9d5edb200fdf84e39ce4dac08c48fadefded8a/application.js#L61).
 
 ### Environment variables
 The `WFM_AUTH_POLICY_ID` env var can be set in the WFM cloud APP to override the default `wfm` auth policy ID.
