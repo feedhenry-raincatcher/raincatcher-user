@@ -59,6 +59,8 @@ You will also need to hash your users' passwords using the new hashing algorithm
 - Manually editing the users' passwords through the updated portal app
 - If you already have user passwords stored in a custom persistent storage implementation, run a single-pass migration to store them as hashed strings instead. See [this example](./examples/hashing-migration.js).
 
+
+
 ## Client-side usage
 
 ### Client-side usage (via broswerify)
