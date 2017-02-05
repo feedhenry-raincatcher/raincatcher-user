@@ -10,8 +10,7 @@ Version 0.2.0 introduces session storage for authenticated users utilizing eithe
 This involves an extra parameter to the initialization of the router for the authentication service which contains the configuration for the session storage.
 
 ### How to upgrade
-
-In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialise the session store with the configuration shown below.
+In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialize the session store with the configuration shown below.
 
 ```javascript
 const userRouter = require('fh-wfm-user/lib/router/mbaas');
@@ -118,7 +117,7 @@ var express = require('express')
   , mbaasExpress = mbaasApi.mbaasExpress()
   , mediator = require('fh-wfm-mediator/lib/mediator')
   ;
-// Set authServiveGuid
+// Set authServiceGuid
 var authServiceGuid = process.env.WFM_AUTH_GUID;
 
 // configure the express app
@@ -138,7 +137,7 @@ var express = require('express')
   , mediator = require('fh-wfm-mediator/lib/mediator')
   ;
 
-// Set authServiveGuid
+// Set authServiceGuid
 var authServiceGuid = process.env.WFM_AUTH_GUID;
 
 // setup authResponseExclusionList to choose which fields you want to remove from the auth response for the user profile data object. eg Password.
