@@ -1,7 +1,7 @@
 # FeedHenry RainCatcher user [![Build Status](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user.png)](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user)
 
 A module for FeedHenry RainCatcher that manages users, groups and memberships. It provides :
-- Backend services to handle CRUD operations for user, group and membership.
+- Backend services to handle CRUD operations for a user, group and membership.
 - Frontend directives and services providing CRUD clients for user, group and membership.
 
 ## Upgrading to 0.2.0 from 0.1.x
@@ -10,8 +10,7 @@ Version 0.2.0 introduces session storage for authenticated users utilizing eithe
 This involves an extra parameter to the initialization of the router for the authentication service which contains the configuration for the session storage.
 
 ### How to upgrade
-
-In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialise the session store with the configuration shown below.
+In the MBaaS service that authenticates users (e.g. [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth)), initialize the session store with the configuration shown below.
 
 ```javascript
 const userRouter = require('fh-wfm-user/lib/router/mbaas');
@@ -34,9 +33,9 @@ userRouter.init(
         secure: true,
         httpOnly: true,
         path: '/'
-      }
+      },
       // `url` is used by the 'mongo' store for configuration
-      url: 'mongodb://localhost:27017/raincatcher-demo-auth-session-store'
+      url: 'mongodb://localhost:27017/raincatcher-demo-auth-session-store',
       // 'host' and 'port' are used by the 'redis' store
       host: '127.0.0.1',
       port: '6379'
@@ -58,7 +57,7 @@ Version 0.2.1 introduced encryption of the users profile data in localstorage (f
 ## Upgrading to 0.1.0 from 0.0.x
 Version 0.1.0 introduces secure authentication along with password hashing. Password update for users is available as part of the updated [raincatcher-demo-portal](https://github.com/feedhenry-raincatcher/raincatcher-demo-portal) (available in Workers > Worker details > Edit)
 
-### How to upgrade
+### How to Upgrade
 Update your mobile application, portal application, cloud application and auth service to utilize version 0.1.x of `fh-wfm-user`.
 Update your auth service to reflect changes in [raincatcher-demo-auth](https://github.com/feedhenry-raincatcher/raincatcher-demo-auth/pull/23)
 
@@ -66,16 +65,16 @@ You will also need to hash your users' passwords using the new hashing algorithm
 - Manually editing the users' passwords through the updated portal app
 - If you already have user passwords stored in a custom persistent storage implementation, run a single-pass migration to store them as hashed strings instead. See [this example](./examples/hashing-migration.js).
 
-## Client-side usage
+## Client-side Usage
 
-### Client-side usage (via broswerify)
+### Client-side Usage (via Browserify)
 
 #### Setup
 This module is packaged in a CommonJS format, exporting the name of the Angular namespace.  The module can be included in an angular.js as follows:
 
 ```javascript
 angular.module('app', [
-, require('fh-wfm-user')
+  require('fh-wfm-user')
 ...
 ])
 ```
@@ -90,7 +89,7 @@ This module provides 3 injectable CRUDL services :
 - `groupClient` : to create, read, list, update and delete groups.
 - `membershipClient` : to create, read, list, update and delete groups.
 
-the `userClient` has these extra functions : `auth`, `hasSession`, `clearSession`, `verify` and `getProfile`
+The `userClient` has these extra functions : `auth`, `hasSession`, `clearSession`, `verify` and `getProfile`
 
 Example usage :
 ```javascript
@@ -114,9 +113,9 @@ For a more complete example around user authentication operations, please check 
 | group | group, members |
 | group-form | value |
 
-## Usage in an express backend and mbaas service
+## Usage in an Express backend and MBaaS Service
 
-### Setup express backend end
+### Setup Express Backend
 The server-side component of this RainCatcher module exports a function that takes express and mediator instances as parameters, as in:
 
 ```javascript
@@ -125,7 +124,7 @@ var express = require('express')
   , mbaasExpress = mbaasApi.mbaasExpress()
   , mediator = require('fh-wfm-mediator/lib/mediator')
   ;
-// Set authServiveGuid
+// Set authServiceGuid
 var authServiceGuid = process.env.WFM_AUTH_GUID;
 
 // configure the express app
@@ -136,7 +135,7 @@ require('fh-wfm-user/lib/router/cloud')(mediator, app, authServiceGuid);
 
 ```
 
-### Setup mbaas service
+### Setup MBaaS Service
 
 ```javascript
 var express = require('express')
@@ -144,8 +143,12 @@ var express = require('express')
   , mbaasExpress = mbaasApi.mbaasExpress()
   , mediator = require('fh-wfm-mediator/lib/mediator')
   ;
-// Set authServiveGuid
+
+// Set authServiceGuid
 var authServiceGuid = process.env.WFM_AUTH_GUID;
+
+// setup authResponseExclusionList to choose which fields you want to remove from the auth response for the user profile data object. eg Password.
+var authResponseExclusionList = ['password'];
 
 // configure the express app
 ...
@@ -177,16 +180,16 @@ Base url : `/api/wfm/[group|user|membership|`
 
 Base url : `/api/wfm/user`
 
-| resource | parameters | method | returns | description |
+| resource | parameters  | returns | description |
 | -------- | ------ | ------- | ---- |
-| /auth | all | `{status: 'ok', userId: username, sessionToken: sessiontoken, authResponse: authResponse}` | `sessionToken` : identifier for a specific user for the duration of that user's visit. <br>  `authResponse` : authentication response containing the authenticated users details. |
-| /verifysession | all | `{isValid: true}` | |
-| /revokesession | all | `{}` |  | |
+| /auth | all | `{status: 'ok', userId: username, sessionToken: sessiontoken, authResponse: authResponse}` | Authenticate a User. <br> `sessionToken` : identifier for a specific user for the duration of that user's visit. <br>  `authResponse` : authentication response containing the authenticated users details. |
+| /verifysession | all | `{isValid: true}` | Check that the user is using a valid session token. |
+| /revokesession | all | `{}` | Revoke a session token. |
 
 
 
-### message data structure example
-- user :
+### Message Data Structure Example
+#### User
 
 ```javascript
 
@@ -203,7 +206,7 @@ Base url : `/api/wfm/user`
   }
 
 ```
-- group :
+#### Group
 
 ```javascript
   {
@@ -212,7 +215,7 @@ Base url : `/api/wfm/user`
     role: 'worker'
   }
 ```
-- membership :
+#### Membership
 
 ```javascript
   {
