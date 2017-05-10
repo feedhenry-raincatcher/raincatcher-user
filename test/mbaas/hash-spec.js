@@ -1,5 +1,5 @@
 var assert = require('assert');
-var hash = require('./hash');
+var hash = require('./../../../lib/mbaas/hash');
 describe('hash', function() {
   describe('#saltAndHash', function() {
     it('should hash a password [slow]', function(done) {

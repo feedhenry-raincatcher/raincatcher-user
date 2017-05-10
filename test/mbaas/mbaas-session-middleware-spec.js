@@ -12,7 +12,7 @@ var redisProviderProxy = {
   '@global': true,
   init: sinon.stub().callsArg(2)
 };
-var mbaasSessionMiddleware = proxyquire('./mbaas-session-middleware', {
+var mbaasSessionMiddleware = proxyquire('../../../lib/cloud/mbaas/mbaas-session-middleware', {
   './mongoProvider': mongoProviderProxy,
   './redisProvider': redisProviderProxy
 });
