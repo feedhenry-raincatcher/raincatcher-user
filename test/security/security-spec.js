@@ -1,8 +1,8 @@
 var assert = require('assert');
-var sampleUserProfileData = require('../../test/fixtures/sampleUserProfile.json');
-var aes = require('./aes.js');
-var sha256 = require('./sha256.js');
-var sampleSecurityData = require('../../test/fixtures/sampleSecurityData.json');
+var sampleUserProfileData = require('../fixtures/sampleUserProfile.json');
+var aes = require('../../lib/security/aes.js');
+var sha256 = require('../../lib/security/sha256.js');
+var sampleSecurityData = require('../fixtures/sampleSecurityData.json');
 
 describe("Test Data Encyption, Hashing and Decryption", function() {
   it('should error when you try to hash a null value', function() {

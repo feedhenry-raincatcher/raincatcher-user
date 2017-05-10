@@ -1,12 +1,12 @@
 var assert = require('assert');
 var mediator = require('fh-wfm-mediator/lib/mediator');
-var Store = require('./store')({
+var Store = require('./../../lib/mbaas/store')({
   persistent: process.env.WFM_USE_MEMORY_STORE !== 'true'
 });
 var store;
 var hrtime = process.hrtime;
 
-var fixtures = require('../../test/fixtures/mockUsers.json');
+var fixtures = require('../fixtures/mockUsers.json');
 var daisyId = 'rJeXyfdrH';
 var userToCreate = {
   "username" : "jdoe",

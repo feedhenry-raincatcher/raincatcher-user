@@ -1,4 +1,4 @@
-var CONSTANTS = require('../../../constants');
+var CONSTANTS = require('../../../../lib/constants');
 var sinon = require('sinon');
 require('sinon-as-promised');
 var chai = require('chai');
@@ -7,7 +7,7 @@ var expect = chai.expect;
 
 var mediator = require("fh-wfm-mediator/lib/mediator");
 var MediatorTopicUtility = require('fh-wfm-mediator/lib/topics');
-var mockUser = require('../../../../test/fixtures/sampleUserProfile.json');
+var mockUser = require('../../../fixtures/sampleUserProfile.json');
 
 
 
@@ -28,7 +28,7 @@ describe("Listing Users", function() {
 
 
   function createListSubscriber(mockUserClient) {
-    userSubscribers.on(CONSTANTS.TOPICS.LIST, require('./list')(userSubscribers, mockUserClient));
+    userSubscribers.on(CONSTANTS.TOPICS.LIST, require('./../../../../lib/client/user/mediator-topics/list')(userSubscribers, mockUserClient));
   }
 
 

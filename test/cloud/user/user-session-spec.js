@@ -1,4 +1,4 @@
-var mockMbaasServiceProxy = require('../../../test/stub/mbaas-service-proxy');
+var mockMbaasServiceProxy = require('../../stub/mbaas-service-proxy');
 var mediator = require('fh-wfm-mediator/lib/mediator');
 var express = require('express');
 var proxyquire = require('proxyquire');
@@ -12,7 +12,7 @@ describe("User Sessions", function() {
 
   beforeEach(function() {
     verifySessionStub = mockMbaasServiceProxy.getMockVerifySessionStub();
-    sessionManager = proxyquire('./user-session', {
+    sessionManager = proxyquire('../../../lib/cloud/user/user-session', {
       './mbaas-service-proxy': mockMbaasServiceProxy.getMockSessionObject(verifySessionStub)
     });
     sessionManager(mediator, express(), 'my-service-name-guid');

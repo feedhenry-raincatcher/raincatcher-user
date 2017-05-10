@@ -1,7 +1,7 @@
 var sinon = require('sinon');
 var proxyquire = require('proxyquire');
-var mockMbaasApi = require('../mocks/mbaasApiMock.js');
-var mockVerifySession = require('../mocks/verifySessionMock');
+var mockMbaasApi = require('../../mocks/mbaasApiMock.js');
+var mockVerifySession = require('../../mocks/verifySessionMock');
 var mediator = require('fh-wfm-mediator/lib/mediator');
 
 describe('Session Validation Middleware', function() {
@@ -17,7 +17,7 @@ describe('Session Validation Middleware', function() {
     validateSession;
 
   beforeEach(function(done) {
-    validateSession = proxyquire('../../lib/cloud/middleware/validateSession.js', {
+    validateSession = proxyquire('../../../lib/cloud/middleware/validateSession.js', {
       './verifySession': mockVerifySession()
     });
 

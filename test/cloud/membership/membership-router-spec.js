@@ -37,14 +37,12 @@ describe('Membership Router Test', function() {
   var membershipIdSuc = 'membership-test-id-1';
   var membershipIdNA = 'membership-test-id-NA';
   var membershipIdErr = 'membership-test-id-ERR';
-
   beforeEach(function(done) {
     app = express();
     app.use(bodyParser.json());
     request = supertest(app);
-    membershipRouter = require('./membership-router');
-    var MembershipOperations = require('./membershipOperations');
-
+    membershipRouter = require('./../../../lib/cloud/membership/membership-router');
+    var MembershipOperations = require('./../../../lib/cloud/membership/membershipOperations/index');
     membershipRouter(app, new MembershipOperations(mediator));
     app.use(mbaasExpress.errorHandler());
     done();

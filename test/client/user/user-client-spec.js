@@ -1,11 +1,11 @@
 var assert = require('assert');
 var sinon = require('sinon');
 var chai = require('chai');
-var userClientMock = require('../../../test/mocks/user-client-mock');
-var sampleUserProfileData = require('../../../test/fixtures/sampleUserProfile.json');
-var sampleSecurityData = require('../../../test/fixtures/sampleSecurityData.json');
+var userClientMock = require('../../mocks/user-client-mock');
+var sampleUserProfileData = require('../../fixtures/sampleUserProfile.json');
+var sampleSecurityData = require('../../fixtures/sampleSecurityData.json');
 
-var UserClient = require('./user-client');
+var UserClient = require('./../../../lib/client/user/user-client');
 var mediator = require('fh-wfm-mediator/lib/mediator');
 
 describe("Test Storage/Retrieval of Profile Data", function() {

@@ -21,7 +21,6 @@ var ERR = 'error:';
 describe('Group Router Test', function() {
   var request;
   var groupRouter;
-
   //Mock Data
   var req = {};
   var res = {};
@@ -39,9 +38,8 @@ describe('Group Router Test', function() {
     var app = express();
     app.use(bodyParser.json());
     request = supertest(app);
-    groupRouter = require('./group-router');
-    var GroupOperations = require('./groupOperations');
-
+    groupRouter = require('../../../lib/cloud/group/group-router');
+    var GroupOperations = require('../../../lib/cloud/group/groupOperations/index');
     groupRouter(app, new GroupOperations(mediator));
     app.use(mbaasExpress.errorHandler());
     done();
@@ -119,7 +117,6 @@ describe('Group Router Test', function() {
 
   it('should return an error if an error occurred when attempting to read a group', function(done) {
     mockErrMessage = "An error occurred during group read";
-
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.read, function(uid) {
       //Publish to error read data topic to fake an error occurrence during the reading of a group by the storage module
