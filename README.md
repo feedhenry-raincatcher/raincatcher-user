@@ -114,6 +114,22 @@ app.use('mbaas/sync', validateSession(mediator, mbaasApi,
 ));
 ```
 
+
+### Retrieving user id for session
+
+Top level applications can now obtain userId for sessionToken.
+Instead of sending user id from client, current logged user id can be now obtained from session token.
+See example bellow:
+
+```javascript
+var mbaasApi = require('fh-mbaas-api');
+var userSessionApi = require("fh-wfm-user/lib/cloud/sessionApi")(mbaasApi);
+  
+return userSessionApi.getUserIdForSessionPromise(filter.sessionToken).then(function(userId){
+  console.log("userId", userId);
+});
+```
+
 ### Setup MBaaS authentication service
 
 ```javascript
