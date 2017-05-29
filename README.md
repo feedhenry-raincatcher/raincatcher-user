@@ -1,4 +1,4 @@
-# FeedHenry RainCatcher user [![Build Status](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user.png)](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user)
+# FeedHenry RainCatcher user [![Build Status](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user.png)](https://travis-ci.org/feedhenry-raincatcher/raincatcher-user) [![Coverage Status](https://coveralls.io/repos/github/feedhenry-raincatcher/raincatcher-user/badge.svg?branch=master)](https://coveralls.io/github/feedhenry-raincatcher/raincatcher-user?branch=master)
 
 A module for FeedHenry RainCatcher that manages users, groups and memberships. It provides :
 - Backend services to handle CRUD operations for user, group and membership.
