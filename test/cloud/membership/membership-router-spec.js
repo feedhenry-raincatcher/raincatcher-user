@@ -53,7 +53,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.subscribe(CLOUD_DATA_TOPICS.list, function() {
       //Publish to done list data topic to fake getting the list of groups by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.list, mockMembershipList);
+      return Promise.resolve(mockMembershipList);
     });
 
     var expectedMembershipList = [
@@ -85,7 +85,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.read, function(uid) {
       //Publish to done read data topic to fake the reading of group by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.read + ':' + uid, mockMembershipList[0]);
+      return Promise.resolve(mockMembershipList[0]);
     });
 
     request
@@ -105,7 +105,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.read, function(uid) {
       //Publish to done read data topic to fake the reading of a non-existing group by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.read + ':' + uid, {});
+      return Promise.resolve({});
     });
 
     request
@@ -127,7 +127,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.read, function(uid) {
       //Publish to error read data topic to fake an error occurrence during the reading of a group by the storage module
-      mediator.publish(ERR + CLOUD_DATA_TOPICS.read + ':' + uid, new Error(mockErrMessage));
+      return Promise.reject(new Error(mockErrMessage));
     });
 
     request
@@ -150,7 +150,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.update, function(membershipToUpdate) {
       //Publish to done update data topic to fake the update of a group by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.update + ':' + membershipToUpdate.id, membershipToUpdate);
+      return Promise.resolve(membershipToUpdate);
     });
 
     request
@@ -173,7 +173,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.update, function(membershipToUpdate) {
       //Publish to error update data topic to fake the update of a non-existing group by the storage module
-      mediator.publish(ERR+ CLOUD_DATA_TOPICS.update + ':' + membershipToUpdate.id, new Error(mockErrMessage));
+      return Promise.reject(new Error(mockErrMessage));
     });
 
     request
@@ -196,7 +196,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.update, function(membershipToUpdate) {
       //Publish to error update data topic to fake an error occurence during the update of a group by the storage module
-      mediator.publish(ERR+ CLOUD_DATA_TOPICS.update + ':' + membershipToUpdate.id, new Error(mockErrMessage));
+      return Promise.reject(new Error(mockErrMessage));
     });
 
     request
@@ -220,7 +220,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.create, function(membershipToUpdate) {
       //Publish to done create data topic to fake the creation of a group by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.create + ':' + membershipToUpdate.id, req);
+      return Promise.resolve(req);
     });
 
     request
@@ -244,7 +244,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.delete, function(membershipToUpdate) {
       //Publish to done delete data topic to fake the deletion of a group by the storage module
-      mediator.publish(DONE + CLOUD_DATA_TOPICS.delete + ':' + membershipToUpdate.id, req);
+      return Promise.resolve(req);
     });
 
 
@@ -268,7 +268,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.delete, function(membershipToUpdate) {
       //Publish to error delete data topic to fake the deletion of a non-existing group by the storage module
-      mediator.publish(ERR + CLOUD_DATA_TOPICS.delete + ':' + membershipToUpdate.id, new Error(mockErrMessage));
+      return Promise.reject(new Error(mockErrMessage));
     });
 
     request
@@ -291,7 +291,7 @@ describe('Membership Router Test', function() {
     //Mock of the data topic subscriber in the storage module
     mediator.once(CLOUD_DATA_TOPICS.delete, function(membershipToUpdate) {
       //Publish to error delete data topic to fake an error occurrence during the deletion of a group by the storage module
-      mediator.publish(ERR + CLOUD_DATA_TOPICS.delete + ':' + membershipToUpdate.id, new Error(mockErrMessage));
+      return Promise.reject(new Error(mockErrMessage));
     });
 
     request

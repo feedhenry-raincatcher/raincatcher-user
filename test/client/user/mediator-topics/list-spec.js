@@ -50,13 +50,7 @@ describe("Listing Users", function() {
 
     createListSubscriber(mockUserClient);
 
-    var doneListUsersTopic = "done:wfm:users:list";
-
-    var listUsersPromise = mediator.promise(doneListUsersTopic);
-
-    mediator.publish(usersListTopic);
-
-    return listUsersPromise.then(function(arrayOfUsers) {
+    return mediator.publish(usersListTopic).then(function(arrayOfUsers) {
       expect(arrayOfUsers[0]).to.deep.equal(mockUser);
       sinon.assert.calledOnce(mockUserClient.list);
     });
@@ -67,13 +61,7 @@ describe("Listing Users", function() {
 
     createListSubscriber(mockUserClient);
 
-    var errorListUsersTopic = "error:wfm:users:list";
-
-    var listUsersErrorPromise = mediator.promise(errorListUsersTopic);
-
-    mediator.publish(usersListTopic);
-
-    return listUsersErrorPromise.then(function(error) {
+    return mediator.publish(usersListTopic).catch(function(error) {
       expect(error.message).to.contain("listing");
       sinon.assert.calledOnce(mockUserClient.list);
     });
