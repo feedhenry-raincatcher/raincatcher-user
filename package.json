@@ -1,6 +1,6 @@
 {
   "name": "fh-wfm-user",
-  "version": "0.6.7",
+  "version": "1.0.0",
   "description": "A user module for WFM",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "express-session": "^1.14.2",
     "fh-mbaas-api": "6.1.8",
     "fh-wfm-mediator": "1.0.0-pre.1",
-    "fh-wfm-simple-store": "0.2.3",
+    "fh-wfm-simple-store": "1.0.0-pre.1",
     "lodash": "4.17.4",
     "mongodb": "^2.2.16",
     "q": "1.4.1",
