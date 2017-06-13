@@ -50,36 +50,9 @@ describe("Reading Currently Logged In User", function() {
 
     createReadSubscriber(mockUserClient);
 
-    var doneReadUsersTopic = "done:wfm:users:read_profile";
-
-    var readUsersPromise = mediator.promise(doneReadUsersTopic);
-
-    mediator.publish(usersReadProfileTopic, {
+    return mediator.publish(usersReadProfileTopic, {
       id: mockUser.id
-    });
-
-    return readUsersPromise.then(function(user) {
-      expect(user).to.deep.equal(mockUser);
-      sinon.assert.calledOnce(mockUserClient.getProfile);
-    });
-  });
-
-  it("should read a user and respond to a unique topic id", function() {
-
-    var mockUserClient = getMockReadUsers(false);
-
-    createReadSubscriber(mockUserClient);
-
-    var doneReadUsersTopic = "done:wfm:users:read_profile:" +mockUser.id;
-
-    var readUsersPromise = mediator.promise(doneReadUsersTopic);
-
-    mediator.publish(usersReadProfileTopic, {
-      id: mockUser.id,
-      topicUid: mockUser.id
-    });
-
-    return readUsersPromise.then(function(user) {
+    }).then(function(user) {
       expect(user).to.deep.equal(mockUser);
       sinon.assert.calledOnce(mockUserClient.getProfile);
     });
@@ -90,13 +63,7 @@ describe("Reading Currently Logged In User", function() {
 
     createReadSubscriber(mockUserClient);
 
-    var errorReadUserTopic = "error:wfm:users:read_profile";
-
-    var readUsersErrorPromise = mediator.promise(errorReadUserTopic);
-
-    mediator.publish(usersReadProfileTopic);
-
-    return readUsersErrorPromise.then(function(error) {
+    return mediator.publish(usersReadProfileTopic).catch(function(error) {
       expect(error.message).to.contain("profile");
       sinon.assert.calledOnce(mockUserClient.getProfile);
     });
